@@ -19,10 +19,11 @@ class ApiExceptionHandler extends ExceptionHandler
             return parent::render($request, $exception);
         }
 
-        // If the exception is of type ValidationException, return an error response with the validation messages
+        // If the exception is of type ValidationException, return an error response with the first validation message
+
         if ($exception instanceof ValidationException) {
-            $errors = $exception->validator->errors()->all();
-            return $this->responseError(report: $errors, statusCode: 422);
+            $error = $exception->validator->errors()->first();
+            return $this->responseError(message: $error, statusCode: 422);
         }
 
         // If the exception is of any other type, return an error response with a generic message and status code 500
