@@ -41,8 +41,9 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        //Override default exception response
+        $this->renderable(function (Throwable $e, $request) {
+            return (new ApiExceptionHandler($this->container))->render($request, $e);
         });
     }
 }
