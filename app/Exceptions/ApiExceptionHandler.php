@@ -4,10 +4,10 @@ namespace App\Exceptions;
 
 use App\Traits\ApiResponse;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ApiExceptionHandler extends ExceptionHandler
 {
@@ -26,6 +26,12 @@ class ApiExceptionHandler extends ExceptionHandler
             return $this->responseError(message: $error, statusCode: 422);
         }
 
+        // If the exception is of type NotFoundHttpException, return an error message
+        if ($exception instanceof NotFoundHttpException) {
+            return $this->responseError(message: 'Recurso no encontrado', statusCode: 404);
+        }
+
+        // If the exception is of type AuthenticationException, return an error message
         if ($exception instanceof AuthenticationException) {
             return $this->responseError(message: 'Los datos de inicio de sesión son incorrectos', statusCode: 401);
         }
