@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
             'username' => ['required', 'max:40'],
             'email' => ['required', 'email', 'unique:users', 'max:40'],
             'password' => ['required', 'min:6', 'max:30'],
-            'phone' => ['required', 'integer', 'min:6','max:8'],
+            'phone' => ['required', 'integer', 'min_digits:6','max_digits:8'],
             'birthdate' => ['required', 'date'],
         ];
     }
@@ -36,7 +36,7 @@ class RegisterRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages() : array
     {
         return [
             'name.required' => 'El nombre es obligatorio.',
@@ -52,8 +52,8 @@ class RegisterRequest extends FormRequest
             'password.max' => 'La contraseña no puede tener mas de :max caracteres.',
             'phone.required' => 'El teléfono es obligatorio.',
             'phone.integer' => 'El teléfono es invalido',
-            'phone.max' => 'El teléfono no puede tener más de :max dígitos.',
-            'phone.min' => 'El teléfono no puede tener menos de :max dígitos.',
+            'phone.min_digits' => 'El teléfono no puede tener menos de :min dígitos.',
+            'phone.max_digits' => 'El teléfono no puede tener más de :max dígitos.',
             'birthdate.required' => 'La fecha de nacimiento es obligatoria.',
             'birthdate.date' => 'La fecha de nacimiento debe ser una fecha válida.'
         ];

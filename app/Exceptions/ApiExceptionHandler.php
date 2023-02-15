@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Traits\ApiResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -24,6 +25,10 @@ class ApiExceptionHandler extends ExceptionHandler
         if ($exception instanceof ValidationException) {
             $error = $exception->validator->errors()->first();
             return $this->responseError(message: $error, statusCode: 422);
+        }
+
+        if ($exception instanceof AuthenticationException) {
+            return $this->responseError(message: 'Los datos de inicio de sesión son incorrectos', statusCode: 401);
         }
 
         // If the exception is of any other type, return an error response with a generic message and status code 500
