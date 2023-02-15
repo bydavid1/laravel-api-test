@@ -21,7 +21,6 @@ class ApiExceptionHandler extends ExceptionHandler
         }
 
         // If the exception is of type ValidationException, return an error response with the first validation message
-
         if ($exception instanceof ValidationException) {
             $error = $exception->validator->errors()->first();
             return $this->responseError(message: $error, statusCode: 422);
