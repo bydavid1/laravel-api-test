@@ -43,6 +43,7 @@ class RegisterRequest extends FormRequest
             'name.max' => 'El nombre no puede tener más de :max caracteres.',
             'username.required' => 'El usuario es obligatorio.',
             'username.max' => 'El usuario no puede tener más de :max caracteres.',
+            'username.unique' => 'No puedes usar este usuario.',
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El correo electrónico debe ser una dirección de correo electrónico válida.',
             'email.unique' => 'No puedes ocupar este correo electrónico.',
