@@ -3,7 +3,7 @@
 namespace App\Services\Product;
 
 use App\Models\Product;
-use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class ProductService
@@ -13,16 +13,16 @@ class ProductService
         return Product::findOrFail($id);
     }
 
-    public function getProducts() : Collection
+    public function getProducts() : LengthAwarePaginator
     {
-        return Product::all();
+        return Product::paginate();
     }
 
-    public function searchProducts(string $query) : Collection
+    public function searchProducts(string $query) : LengthAwarePaginator
     {
         return Product::where(DB::raw('BINARY `name`'), 'like', "%{$query}%")
         ->orWhere(DB::raw('BINARY `SKU`'), 'like', "%{$query}%")
-        ->get();
+        ->paginate();
     }
 
     public function storeProduct(array $data) : Product
