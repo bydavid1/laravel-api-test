@@ -28,12 +28,20 @@ class ApiExceptionHandler extends ExceptionHandler
 
         // If the exception is of type NotFoundHttpException, return an error message
         if ($exception instanceof NotFoundHttpException) {
-            return $this->responseError(message: 'Recurso no encontrado', statusCode: 404);
+            return $this->responseError(
+                message: 'Recurso no encontrado',
+                report: config('app.debug') ? ['errors' => $exception->getMessage(), 'trace' => $exception->getTrace()] : null,
+                statusCode: 404);
         }
 
         // If the exception is of type AuthenticationException, return an error message
         if ($exception instanceof AuthenticationException) {
             return $this->responseError(message: 'Los datos de inicio de sesión son incorrectos', statusCode: 401);
+        }
+
+        // If the exception is of type ResetPasswordCodeExpiredException, return an error message
+        if ($exception instanceof ResetPasswordCodeExpiredException) {
+            return $this->responseError(message: 'El código ha expirado', statusCode: 401);
         }
 
         // If the exception is of any other type, return an error response with a generic message and status code 500
