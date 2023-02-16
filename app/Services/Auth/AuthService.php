@@ -51,8 +51,12 @@ class AuthService
         $user = User::where('email', $email)->first();
 
         if ($user) {
-            $recoveryCode = $this->generateRecoveryCode();
 
+            $recovery = ResetPasswordCode::where('email', $email)->first();
+
+            if($recovery != null) $recovery->delete();
+
+            $recoveryCode = $this->generateRecoveryCode();
             ResetPasswordCode::create([
                 'email' => $email,
                 'code' => $recoveryCode,
