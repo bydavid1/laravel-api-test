@@ -7,6 +7,7 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Services\Product\ProductService;
 use App\Traits\ApiResponse;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -21,6 +22,10 @@ class ProductController extends Controller
 
     public function list() {
         return $this->responseSuccess(data: $this->productService->getProducts());
+    }
+
+    public function search(Request $request) {
+        return $this->responseSuccess(data: $this->productService->searchProducts($request->input('query')));
     }
 
     public function store(StoreProductRequest $request)

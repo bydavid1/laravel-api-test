@@ -4,6 +4,7 @@ namespace App\Services\Product;
 
 use App\Models\Product;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
@@ -15,6 +16,13 @@ class ProductService
     public function getProducts() : Collection
     {
         return Product::all();
+    }
+
+    public function searchProducts(string $query) : Collection
+    {
+        return Product::where(DB::raw('BINARY `name`'), 'like', "%{$query}%")
+        ->orWhere(DB::raw('BINARY `SKU`'), 'like', "%{$query}%")
+        ->get();
     }
 
     public function storeProduct(array $data) : Product
