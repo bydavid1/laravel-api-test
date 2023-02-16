@@ -76,7 +76,7 @@ class AuthService
     {
         $passwordReset = ResetPasswordCode::where('code', $credentials['code'])->first();
 
-        if ($passwordReset->created_at > $passwordReset->expires_at) {
+        if (Carbon::now() > $passwordReset->expires_at) {
             $passwordReset->delete();
             throw new ResetPasswordCodeExpiredException();
         }
