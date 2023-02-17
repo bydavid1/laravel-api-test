@@ -46,18 +46,33 @@ MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=465
 MAIL_USERNAME=byronjimenez9911@gmail.com
-MAIL_PASSWORD=zauysbcyrdbsjwdx
+MAIL_PASSWORD=provisionalpassword
 MAIL_ENCRYPTION=ssl
 MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 
-Una vez tengamos todo configurado, ejecutamos las migracionnes y los seeders
+Una vez tengamos todo configurado, ejecutamos las migracionnes y los seeders.
+
 
 ```
 php artisan migrate
 ```
 
 ```
-php artisan  db:seed
+php artisan db:seed
 ```
+
+Si se está usando docker primero debemos acceder al contenedor 
+
+```
+docker exec -it [container_id] bash
+```
+
+## API Documentation
+
+Los request de la API estan en https://www.postman.com/bydavid1/workspace/laravel-api-test/overview
+
+Para ver la especificacion OPEN:API: http://146.190.113.66/openapi
+
+Para ver la especificacion OPEN:API desde postman hay que ir a `API > Laravel API Test > Definition > index.json`
