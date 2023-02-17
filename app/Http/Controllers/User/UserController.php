@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Resources\User\UserCollection;
 use App\Services\User\UserService;
 use App\Traits\ApiResponse;
 
@@ -20,7 +21,7 @@ class UserController extends Controller
 
     }
     public function list() {
-        return $this->responseSuccess(data: $this->userService->getUsers());
+        return UserCollection::make($this->userService->getUsers());
     }
 
     public function store(RegisterRequest $request)

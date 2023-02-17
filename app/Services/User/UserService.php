@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class UserService
@@ -13,9 +14,9 @@ class UserService
         return User::findOrFail($id);
     }
 
-    public function getUsers() : Collection
+    public function getUsers() : LengthAwarePaginator
     {
-        return User::where('id', '!=', Auth::user()->id)->get();
+        return User::where('id', '!=', Auth::user()->id)->paginate();
     }
 
     public function storeUser(array $data) : User
