@@ -18,8 +18,8 @@ trait ApiResponse
     {
         $response = [];
 
-        if ($data != null) $response['data'];
-        if ($message != null) $response['message'];
+        if ($data != null) $response['data'] = $data;
+        if ($message != null) $response['message'] = $message;
 
         return new JsonResponse($response, $statusCode);
     }
