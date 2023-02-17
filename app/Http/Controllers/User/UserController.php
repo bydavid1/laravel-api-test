@@ -17,36 +17,30 @@ class UserController extends Controller
     public function __construct(
         private UserService $userService
     )
-    {
+    { }
 
-    }
     public function list() {
         return UserCollection::make($this->userService->getUsers());
     }
 
     public function store(RegisterRequest $request)
     {
-        $user = $this->userService->storeUser(data: $request->validated());
+        $this->userService->storeUser(data: $request->validated());
 
-        return $this->responseSuccess(data: $user, message: 'Usuario creado exitosamente');
+        return $this->responseSuccess( message: 'Usuario creado exitosamente', statusCode: 201);
     }
 
     public function update(UpdateRequest $request, int $id)
     {
-        return $this->responseSuccess(
-            data: $this->userService->updateUser(
-                user: $this->userService->getUser($id),
-                data: $request->validated()
-            ),
-            message: 'Usuario actualizado exitosamente');
+        $this->userService->updateUser(user: $this->userService->getUser($id), data: $request->validated());
+
+        return $this->responseSuccess(message: 'Usuario actualizado exitosamente');
     }
 
     public function destroy(int $id)
     {
-        return $this->responseSuccess(
-            data: $this->userService->deleteUser(
-                user: $this->userService->getUser($id)
-            ),
-            message: 'Usuario eliminado exitosamente');
+        $this->userService->deleteUser(user: $this->userService->getUser($id));
+
+        return $this->responseSuccess(message: 'Usuario eliminado exitosamente');
     }
 }

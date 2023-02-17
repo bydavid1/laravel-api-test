@@ -32,27 +32,21 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $user = $this->productService->storeProduct(data: $request->validated());
+        $this->productService->storeProduct(data: $request->validated());
 
-        return $this->responseSuccess(data: $user, message: 'Producto creado exitosamente');
+        return $this->responseSuccess(message: 'Producto creado exitosamente', statusCode: 201);
     }
 
     public function update(UpdateProductRequest $request, int $id)
     {
-        return $this->responseSuccess(
-            data: $this->productService->updateProduct(
-                product: $this->productService->getProduct($id),
-                data: $request->validated()
-            ),
-            message: 'Producto actualizado exitosamente');
+        $this->productService->updateProduct(product: $this->productService->getProduct($id),data: $request->validated());
+        return $this->responseSuccess(message: 'Producto actualizado exitosamente');
     }
 
     public function destroy(int $id)
     {
-        return $this->responseSuccess(
-            data: $this->productService->deleteProduct(
-                product: $this->productService->getProduct($id)
-            ),
-            message: 'Producto eliminado exitosamente');
+        $this->productService->deleteProduct(product: $this->productService->getProduct($id));
+
+        return $this->responseSuccess(message: 'Producto eliminado exitosamente');
     }
 }

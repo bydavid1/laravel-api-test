@@ -14,36 +14,32 @@ trait ApiResponse
      * @param string|null $message
      * @return JsonResponse
      */
-    public function responseSuccess($data, $message = null): JsonResponse
+    public function responseSuccess($data = null, $message = null, int $statusCode = 200): JsonResponse
     {
-        if ($message != null) {
-            return new JsonResponse([
-                'success' => true,
-                'payload' => $data,
-                'message' => $message
-            ], 200);
-        }
+        $response = [];
 
-        return new JsonResponse([
-            'success' => true,
-            'payload' => $data
-        ]);
+        if ($data != null) $response['data'];
+        if ($message != null) $response['message'];
+
+        return new JsonResponse($response, $statusCode);
     }
+
 
     /**
      * Returns error response
      *
-     * @param string|null $message
+     * @param string $message
      * @param array|null $report
      * @param integer $statusCode
      * @return JsonResponse
      */
-    public function responseError($message = null, $report = null, $statusCode = 500): JsonResponse
+    public function responseError($message, $report = null, $statusCode = 500): JsonResponse
     {
-        return new JsonResponse([
-            'success' => false,
-            'report' => $report,
-            'message' => $message,
-        ], $statusCode);
+        $error = [];
+        $error['code'] = (string) $statusCode;
+        $error['title'] = $message;
+        if ($report != null) $error['source'] = $report;
+
+        return new JsonResponse(['error' => $error], $statusCode);
     }
 }
