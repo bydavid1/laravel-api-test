@@ -26,9 +26,9 @@ DB_PASSWORD=password
 
 El `FORWARD_DB_PORT` es opcional,  solo funciona para docker-compose ya que sirve para redireccionar el puerto del host principal.
 
-Si no tienes un sistema de base de datos instalados puedes ocupar docker-compose para crear el contenedor, este proyecto de Laravel ya cuenta con la configuración necesaria .
+Si no tienes un sistema de base de datos o web instalados puedes ocupar docker-compose para crear el contenedor, este proyecto de Laravel ya cuenta con la configuración necesaria .
  
- ### Usando Docker compose
+### Usando Docker compose
  Para usar docker compose basta con ejecutar Laravel Sail
 
 ```
@@ -36,6 +36,22 @@ Si no tienes un sistema de base de datos instalados puedes ocupar docker-compose
 ```
 
 Esto descargará las imágenes y ejecutará los contenedores necesarios
+
+### Usando instalación normal
+
+Cuando se continua con la instalación normal se debe seguir estos pasos:
+
+Ejecutar:
+
+```
+php artisan key:generate
+```
+
+Y luego encender el servidor:
+
+```
+php artisan serve
+```
 
 ### Siguiendo con la instalación
 
@@ -45,7 +61,7 @@ Luego, es necesario configurar un servidor de mailing, para eso editamos nuestro
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=465
-MAIL_USERNAME=byronjimenez9911@gmail.com
+MAIL_USERNAME=youremailaccount@gmail.com
 MAIL_PASSWORD=provisionalpassword
 MAIL_ENCRYPTION=ssl
 MAIL_FROM_ADDRESS="hello@example.com"
@@ -71,8 +87,18 @@ docker exec -it [container_id] bash
 
 ## API Documentation
 
-Los request de la API estan en https://www.postman.com/bydavid1/workspace/laravel-api-test/overview
+La collección de request de la API estan en https://www.postman.com/bydavid1/workspace/laravel-api-test/overview
+
+Para tener todos los requests disponibles a la api desplegada, primero debe cambiar el `Environment` a `Development` para tener acceso a la `BASE_URL` => http://146.190.113.66
+
+Los responses de los request usan las especificaciones basicas de https://jsonapi.org/format/
 
 Para ver la especificacion OPEN:API: http://146.190.113.66/openapi
 
 Para ver la especificacion OPEN:API desde postman hay que ir a `API > Laravel API Test > Definition > index.json`
+
+## Seguridad
+
+Gitguard puede mostrar advertencias por el dump de sql, al ser solo un repositorio de prueba se pueden ignorar
+
+
